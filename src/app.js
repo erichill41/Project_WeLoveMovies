@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/movies', moviesRouter);
-// app.use('/reviews', reviewsRouter);
-// app.use('/theatres', theatresRouter);
+app.use('/reviews', reviewsRouter);
+app.use('/theatres', theatresRouter);
 
 app.use(notFound);
 app.use(errorHandler);

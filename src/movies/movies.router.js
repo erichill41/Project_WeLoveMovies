@@ -22,4 +22,5 @@ router
     .get(controller.readReviews)
     .all(methodNotAllowed);
 
-    module.exports = router;
+
+module.exports = router;
