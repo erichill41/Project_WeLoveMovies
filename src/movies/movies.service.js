@@ -6,11 +6,17 @@ function list() {
 }
 
 function isShowing() {
-    return knex('movies')
-        .join('movies_theatres', 'movies.movie_id', 'movies_theatres.movie_id')
-        .select('movies.*')
-        .where({ is_showing: true })
-        .groupBy('movie.movie_id')
+    return knex("movies as m")
+    .join("movies_theaters as mt", "m.movie_id", "mt.movie_id")
+    .distinct(
+      "mt.movie_id",
+      "m.title",
+      "m.runtime_in_minutes",
+      "m.rating",
+      "m.description",
+      "m.image_url"
+    )
+    .where({ "mt.is_showing": true });
 }
 
 const addCritic = mapProperties({
@@ -27,9 +33,9 @@ function read(movieId) {
         .first();
 }
 
-function readTheatres(movieId) {
-    return knex('theatres as t')
-        .join('movies_theatres as mt', 't.theatre_id', 'mt.theatre_id')
+function readTheaters(movieId) {
+    return knex('theaters as t')
+        .join('movies_theaters as mt', 't.theater_id', 'mt.theater_id')
         .select('*')
         .where({ movie_id: movieId, is_showing: true });
 }
@@ -53,6 +59,6 @@ module.exports = {
     list,
     isShowing,
     read,
-    readTheatres,
+    readTheaters,
     readReviews,
 };

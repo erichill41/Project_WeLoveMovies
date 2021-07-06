@@ -13,14 +13,16 @@ async function reviewExists(req, res, next) {
     });
 }
 
-async function update(req, res) {
-    const oldReview = res.locals.review;
-    const updatedReview = {
-        ...req.body.data,
-        review_id: oldReview,
-    };
-    await service.update(updatedReview);
-    res.json({ data: await service.returnUpdated(oldReview) });
+async function update(req, res, next) {
+  const { content, score } = req.body.data;
+  res.locals.review.content = content;
+  res.locals.review.score = score;
+
+  const review = await service.update(res.locals.review);
+  const data = await service.readReviewWithCritic(req.params.reviewId);
+  console.log(review);
+  console.log(data);
+  res.json({ data: data[0] });
 }
 
 async function destroy(req, res) {

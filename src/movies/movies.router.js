@@ -13,8 +13,8 @@ router
     .all(methodNotAllowed);
 
 router
-    .route('/:movieId/theatres')
-    .get(controller.readTheatres)
+    .route('/:movieId/theaters')
+    .get(controller.readTheaters)
     .all(methodNotAllowed);
 
 router
