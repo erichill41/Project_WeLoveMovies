@@ -1,5 +1,6 @@
 const service = require('./movies.service');
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary');
+const reviewExists = require('../reviews/reviews.controller');
 
 async function movieExists(req, res, next) {
     const movieId = req.params.movieId;
@@ -44,5 +45,5 @@ module.exports = {
     list: asyncErrorBoundary(list),
     read: [asyncErrorBoundary(movieExists), read],
     readTheaters: [asyncErrorBoundary(movieExists), readTheaters],
-    read,
+    readReviews: [asyncErrorBoundary(reviewExists), readReviews],
 }
